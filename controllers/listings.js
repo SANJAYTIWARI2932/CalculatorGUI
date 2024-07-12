@@ -70,58 +70,58 @@ module.exports.showListing=async(req,res)=>{
 //     res.redirect("/listings");
 //   };
 
-// module.exports.createListing = async (req, res, next) => {
-//     try {
-//       // Forward geocode to get coordinates based on location
-//       const response = await geocodingClient.forwardGeocode({
-//         query: req.body.listing.location,
-//         limit: 1
-//       }).send();
-  
-//       // Extract image URL and filename from the uploaded file
-//       const url = req.file.path;
-//       const filename = req.file.filename;
-  
-//       // Create a new Listing instance with data from the request body
-//       const newListingData = {
-//         title: req.body.listing.title,
-//         description: req.body.listing.description,
-//         price: req.body.listing.price,
-//         location: req.body.listing.location,
-//         country: req.body.listing.country,
-//         category: req.body.listing.category,
-//         owner: req.user._id, // Assuming req.user contains authenticated user data
-//         image: { url, filename },
-//         geometry: response.body.features[0].geometry
-//       };
-  
-//       const newListing = new Listing(newListingData);
-  
-//       // Save the new listing to the database
-//       const savedListing = await newListing.save();
-  
-//       // Redirect to the listings page with a success flash message
-//       req.flash("success", "New Listing created!");
-//       res.redirect("/listings");
-//     } catch (error) {
-//       // Handle any errors that occur during listing creation
-//       console.error("Error creating listing:", error);
-//       req.flash("error", "Failed to create new listing. Please try again.");
-//       res.redirect("/listings");
-//     }
-//   };
-  
-// Inside your createListing controller function
 module.exports.createListing = async (req, res, next) => {
     try {
-        console.log(req.body);
-
+      // Forward geocode to get coordinates based on location
+      const response = await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1
+      }).send();
+  
+      // Extract image URL and filename from the uploaded file
+      const url = req.file.path;
+      const filename = req.file.filename;
+  
+      // Create a new Listing instance with data from the request body
+      const newListingData = {
+        title: req.body.listing.title,
+        description: req.body.listing.description,
+        price: req.body.listing.price,
+        location: req.body.listing.location,
+        country: req.body.listing.country,
+        category: req.body.listing.category,
+        owner: req.user._id, // Assuming req.user contains authenticated user data
+        image: { url, filename },
+        geometry: response.body.features[0].geometry
+      };
+  
+      const newListing = new Listing(newListingData);
+  
+      // Save the new listing to the database
+      const savedListing = await newListing.save();
+  
+      // Redirect to the listings page with a success flash message
+      req.flash("success", "New Listing created!");
+      res.redirect("/listings");
     } catch (error) {
-        console.error("Error creating listing:", error);
-        req.flash("error", "Failed to create new listing. Please try again.");
-        res.redirect("/listings");
+      // Handle any errors that occur during listing creation
+      console.error("Error creating listing:", error);
+      req.flash("error", "Failed to create new listing. Please try again.");
+      res.redirect("/listings");
     }
-};
+  };
+  
+// Inside your createListing controller function
+// module.exports.createListing = async (req, res, next) => {
+//     try {
+//         console.log(req.body);
+
+//     } catch (error) {
+//         console.error("Error creating listing:", error);
+//         req.flash("error", "Failed to create new listing. Please try again.");
+//         res.redirect("/listings");
+//     }
+// };
 
   
 module.exports.renderEdit=async(req,res) =>{
