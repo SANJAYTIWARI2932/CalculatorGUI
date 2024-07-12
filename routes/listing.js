@@ -11,8 +11,6 @@ const upload = multer({ storage });
 
 
 
-
-
 router.route("/")
     //index Route
     .get(wrapAsync(listingController.index))
@@ -23,6 +21,9 @@ router.route("/")
 
 //new Route 
 router.get("/new",isLoggedIn,listingController.renderNewForm);
+
+router.get("/category/:cate",listingController.category);
+router.post("/destination",listingController.searchPlace);
 
 
 router.route("/:id")
